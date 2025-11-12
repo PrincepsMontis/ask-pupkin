@@ -1,0 +1,99 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>index</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="/public/index.html" class="logo_link">AskPupkin</a> 
+        </div>
+        <div class="search">
+            <input type="search" placeholder="search">
+            <a href="/public/ask.html" class="ask-button">ASK!</a>
+        </div>
+        <div class="profile">
+            <div class="avatar">
+                <img src="#" alt="" class="avatar_img">
+            </div>
+            <div class="profile-info">
+                <p>Dr.Pepper</p>
+                <div class="header_links">
+                    <a href="/public/settings.html">settings</a>
+                    <a href="#">log out</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <h2>
+                New Questions
+                <span><a href="/public/index.html">Hot Questions</a></span>
+            </h2>
+            <div class="questions-list">
+
+                {% for question in new_questions %}
+                    <div class="question">
+                        <div class="left">
+                        <img src="#" alt="" class="question_img">
+                        <input type="number">
+                    </div>
+                    <div class="center_que">
+                        <a href="">{{ question.question_text }}</a>
+                        <p>{{question.question_detail_text}}
+                    </p>
+                        <div class="padding_que">
+                            <a href="/public/question.html" class="ans">answer(3)</a>
+                            <div class="tags_que">
+                                <p>Tags:</p>
+                                <a href="#">black-jack</a>
+                                <a href="/public/tags.html">bender</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div> 
+            <div class="button_list">
+                {% for page in pages %}
+                    <a href="/?page={{page}}">{{page}}</a>
+                {% endfor %}
+            </div>
+        </div>
+       <div class="content_tags">
+            <div class="tags-container">
+                <h3>Popular Tags</h3>
+                <div class="tags">
+                    <a href="#">perl</a>
+                    <a href="#" class="text-red">python</a>
+                    <a href="#">Technopark</a>
+                    <a href="#" class="text-red">MySQL</a>
+                    <a href="#" class="text-green">django</a>
+                    <a href="#">Mail.ru</a>
+                    <a href="#">Voloshin</a>
+                    <a href="#" class="text-orange">Firefox</a>
+                </div>
+            </div>
+            <div class="members-container">
+                <h3>Best Members</h3>
+                <ul>
+                    <li><a href="#">Mr.Freeman</a></li>
+                    <li><a href="#">Dr.House</a></li>
+                    <li><a href="/public/tags.html">Bender</a></li>
+                    <li><a href="#">Queen Victoria</a></li>
+                    <li><a href="#">V Pupkin</a></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
