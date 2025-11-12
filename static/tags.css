@@ -1,0 +1,384 @@
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    width: 100%;
+    background-color: #5f1bffb0;
+}
+
+.log{
+    flex: 1;
+}
+
+header .logo .logo_link{
+    color: #fff;
+    text-decoration: none;
+    font-size: 32px;
+    letter-spacing: 0.02em;   
+    word-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.search {
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.header_links{
+    display: flex;
+    justify-content: center;
+}
+
+.header_links a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 5px;
+    font-weight: 500;
+}
+
+
+
+header .logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.avatar{
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.profile{
+    display: flex;
+}
+.avatar_img{
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+    margin-top: 5px;
+    border: 1px solid black;
+    background-image: none;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.profile-info p{
+    font-size: 25px;
+}
+
+
+
+button{
+    display: inline-block;	
+	padding: 0 15px;
+	margin: 0 15px 15px 0;
+	border: none;  
+	border-radius: 10px;
+	height: 40px;
+    width: 150px;
+	line-height: 40px;
+	font-size: 15px;
+	color: #fff;
+	background-color: #5f1bffb0;
+	cursor: pointer;
+    font-weight: 700;
+}
+
+.search-button {
+    color: #FFF ; 
+    background-color: #4421c2fa ;
+    margin-top: 15px;
+    margin-left: 10px;
+    border:3px black ;
+    height: 38px;
+    width: 75px;
+}
+
+main {
+    display: flex;
+    justify-content: start;
+}
+
+.main-container {
+    margin-top: 24px;
+    width: 70%;
+    padding: 0 24px;
+}
+
+.question_img{
+    width: 80px;
+    height: 80px;
+    border: 2px solid black;
+    background-image: none;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 2px;
+    object-fit: cover;
+    border-radius: 8px;
+    
+}
+
+.questions-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.question {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    margin-top: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    
+}
+
+.question:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* усиливаем тень при наведении */
+}
+.main-container h2 a {
+    font-size: 15px;
+    text-decoration: none;
+    color: lightseagreen;
+}
+
+
+.main-container h2 a:hover {
+    text-decoration: underline;
+}
+.left{
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    padding: 10px;
+}
+.left input[type="number"]{
+    margin-top: 5px;
+    width: 60px;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #5f1bffb0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.center_que p{
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.center_que a{
+    text-decoration: none;
+    color: #5f1bffb0;
+
+}
+.padding_que{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.padding_que a{
+    margin-right: 10px;
+}
+
+.button_list{
+    margin-top: 30px;
+}
+
+.button_list button{
+    width: 40px;
+    align-items: center;
+    padding: 0;
+}
+.tags_que{
+    display: flex;
+}
+
+.tags_que p{
+    margin-right: 5px;
+}
+
+
+
+.content_tags{
+    margin-top: 25px;
+    gap: 24px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1000px;
+
+}
+
+.tags-container{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.tags-container h3{
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+
+.tags {
+    display: flex;
+    gap: 6px 8px;
+    flex-wrap: wrap;
+    max-width: 200px;
+    
+}
+
+.tags a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 1px;
+    margin-top: 10px;
+}
+.text-red{
+    color: red !important;
+    
+}
+
+.text-green{
+    color: green !important;
+}
+
+.text-orange{
+    color: orange !important;
+}
+
+.members-container{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.members-container h3{
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.members-container ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.members-container li{
+    margin-bottom: 5px;
+}
+
+.members-container a{
+    text-decoration: none;
+    color: #0055cc;
+    font-weight: 400;
+
+}
+
+
+input[type="search"] {
+    width: 220px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1.5px solid #5f1bffb0;
+    border-radius: 18px;
+    font-size: 15px;
+    color: #333;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: rgba(0,0,0,0);
+	color: #5f1bffb0;
+	box-shadow: inset 0 0 0 3px #5f1bffb0;
+}
+
+.search-button:hover{
+    background: #fff;
+	color: #4421c2fa;
+	box-shadow: inset 0 0 0 3px #4421c2fa;
+}
+
+
+
+.left input[type="number"]:focus {
+    border-color: #4421c2fa;
+    box-shadow: 0 0 0 3px rgba(68, 33, 194, 0.2);
+}
+
+.header_links a:hover{
+    text-decoration: underline;
+    color: rgb(27, 27, 224);
+}
+
+.members-container a:hover{
+    color:#022a63;
+}
+.tags a:hover{
+    color: rgb(27, 27, 224);
+}
+
+.text-red:hover{
+    color: rgb(27, 27, 224) !important;
+}
+
+.text-orange:hover{
+    color: rgb(27, 27, 224) !important;
+}
+
+.text-green:hover{
+    color: rgb(27, 27, 224) !important;
+}
