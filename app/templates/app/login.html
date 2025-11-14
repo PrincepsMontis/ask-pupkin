@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskPupkin - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="{% url 'app:index' %}" class="logo_link">AskPupkin</a> 
+        </div>
+        <div class="search">
+            <input type="search" placeholder="search">
+        </div>
+        <div class="header_links">
+            <a href="{% url 'app:login' %}">log in</a>
+            <a href="{% url 'app:signup' %}">register</a>
+        </div>
+    </header>
+    <div class="main_container">
+        <div class="login">
+            <div class="login_name">Log In</div>
+            <div class="error">Sorry, wrong password!</div>
+            <div class="enters">
+                <div class="login_enter">
+                    <div class="login_label">Login</div>
+                    <div class="login_input">
+                        <input type="text" placeholder="Enter your login here">
+                    </div>
+                </div>
+                <div class="password_enter">
+                    <div class="password_label">Password</div>
+                    <div class="password_input">
+                        <input type="password" placeholder="Enter your password here">
+                    </div>
+                </div>
+                <div class="login_foot">
+                    <button>Log In!</button>
+                </div>
+                <a href="{% url 'app:signup' %}" class="new_account">create new account</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,349 @@
+*{
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
+}
+body{
+    margin: 0px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    width: 100%;
+    background-color: #5f1bffb0;
+}
+
+.log{
+    flex: 1;
+}
+
+header .logo .logo_link{
+    color: #fff;
+    text-decoration: none;
+    font-size: 32px;
+    letter-spacing: 0.02em;   
+    word-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.search {
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.header_links{
+    display: flex;
+    justify-content: center;
+}
+
+.header_links a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 5px;
+    font-weight: 500;
+}
+.main_container{
+    display: flex;
+    justify-content: start;
+    gap: 24px;
+    padding: 0 24px;
+}
+.login_name{
+    font-size: 25px;
+    letter-spacing: 0.02em;   
+    word-spacing: 0.05em;  
+    display: flex;
+    font-weight: 600;
+}
+
+.error{
+    color: red;
+    font-size: 18px;
+    margin-top: 5px;
+    padding-bottom: 10px;
+    font-weight: 400;
+}
+
+.login{
+    margin-top: 24px;
+    padding: 0;
+    width: 70%;
+    padding-left: 50px;
+}
+
+.enters{
+    display: contents;
+}
+.login_enter{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.login_label{
+    margin-right:95px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.password_enter{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+}
+
+.password_label{
+    margin-right:63px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.email_enter{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+}
+
+.email_label{
+    margin-right:94px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.nick_enter{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+}
+
+.nick_label{
+    margin-right:57px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.reppass{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+}
+
+.reppass_label{
+    margin-right:5px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.choose_img{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+}
+
+.img_label{
+    margin-right:29px;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.img_input input[type="file"]{
+    width: 105px;
+    margin-right: 5px;
+}
+
+button{
+    display: inline-block;	
+	padding: 0 15px;
+	margin: 0 15px 15px 0;
+	border: none;  
+	border-radius: 10px;
+	height: 40px;
+    width: 150px;
+	line-height: 40px;
+	font-size: 15px;
+	color: #fff;
+	background-color: #5f1bffb0;
+	cursor: pointer;
+    font-weight: 700;
+}
+
+.img_button {
+    width: 110px !important;
+}
+
+.login_foot{
+    display: flex;
+    flex-direction: column;
+    margin-left: 136px;
+    margin-top: 30px;
+
+}
+
+
+
+.content_tags{
+    margin-top: 25px;
+    gap: 24px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1000px;
+
+}
+
+.tags-container{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.tags-container h3{
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+
+.tags {
+    display: flex;
+    gap: 6px 8px;
+    flex-wrap: wrap;
+    max-width: 200px;
+    
+}
+
+.tags a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 1px;
+    margin-top: 10px;
+}
+.text-red{
+    color: red !important;
+    
+}
+
+.text-green{
+    color: green !important;
+}
+
+.text-orange{
+    color: orange !important;
+}
+
+.members-container{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.members-container h3{
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.members-container ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.members-container li{
+    margin-bottom: 5px;
+}
+
+.members-container a{
+    text-decoration: none;
+    color: #0055cc;
+    font-weight: 400;
+
+}
+
+input[type="search"], input[type="text"],input[type="password"],input[type="file"] {
+    width: 220px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1.5px solid #5f1bffb0;
+    border-radius: 18px;
+    font-size: 15px;
+    color: #333;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+input[type="file"]{
+    padding-top: 3px;
+}
+
+input[type="search"]:focus, input[type="text"]:focus,input[type="password"]:focus,input[type="file"]:focus{
+    outline: none;
+    box-shadow: 0 0 8px rgba(18, 1, 44, 0.4);
+}
+
+input[type="search"]::placeholder,input[type="text"]::placeholder,input[type="password"]::placeholder,input[type="file"]::placeholder {
+    color: #aaa;
+}
+
+button:hover{
+    background: rgba(0,0,0,0);
+	color: #5f1bffb0;
+	box-shadow: inset 0 0 0 3px #5f1bffb0;
+}
+
+.new_account:hover{
+    color:#0055cc;
+    text-decoration:underline;
+}
+
+.header_links a:hover{
+    text-decoration: underline;
+    color: rgb(27, 27, 224);
+}
+
+.members-container a:hover{
+    color:#022a63;
+}
+.tags a:hover{
+    color: rgb(27, 27, 224);
+}
+
+.text-red:hover{
+    color: rgb(27, 27, 224) !important;
+}
+
+.text-orange:hover{
+    color: rgb(27, 27, 224) !important;
+}
+
+.text-green:hover{
+    color: rgb(27, 27, 224) !important;
+}
+

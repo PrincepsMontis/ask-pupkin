@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/question.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <title>AskPupkin - New Questions</title>
+    <title>AskPupkin - Question</title>
 </head>
 <body>
     <header class="header">
@@ -19,51 +19,56 @@
             <input type="search" placeholder="search">
             <a href="{% url 'app:ask' %}" class="ask-button">ASK!</a>
         </div>
-        <div class="profile">
-            <div class="avatar">
-                <img src="#" alt="" class="avatar_img">
-            </div>
-            <div class="profile-info">
-                <p>Dr.Pepper</p>
-                <div class="header_links">
-                    <a href="{% url 'app:settings' %}">settings</a>
-                    <a href="#">log out</a>
-                </div>
-            </div>
+        <div class="header_links">
+            <a href="{% url 'app:login' %}">log in</a>
+            <a href="{% url 'app:signup' %}">register</a>
         </div>
     </header>
     <main>
         <div class="main-container">
-            <h2>
-                New Questions
-                <span><a href="{% url 'app:hot' %}">Hot Questions</a></span>
-            </h2>
+            <div class="active_question">
+                <div class="act_left">
+                    <img src="#" alt="" class="question_img">
+                    <input type="number" value="{{ question.votes }}">
+                </div>
+                <div class="center_que">
+                    <h2>{{ question.title }}</h2>
+                    <p>{{ question.text }}</p>
+                    <div class="padding_que">
+                        <a href="" class="ans">answer({{ question.answers_count }})</a>
+                        <div class="tags_que">
+                            <p>Tags:</p>
+                            {% for tag in question.tags %}
+                                <a href="{% url 'app:tag' tag %}">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
             <div class="questions-list">
-                {% for question in new_questions %}
+                {% for answer in answers %}
                     <div class="question">
                         <div class="left">
                             <img src="#" alt="" class="question_img">
-                            <input type="number">
+                            <input type="number" value="{{ answer.votes }}">
                         </div>
                         <div class="center_que">
-                            <a href="{% url 'app:question_detail' question.id %}">{{ question.question_text }}</a>
-                            <p>{{ question.question_detail_text }}</p>
-                            <div class="padding_que">
-                                <a href="{% url 'app:question_detail' question.id %}" class="ans">answer(3)</a>
-                                <div class="tags_que">
-                                    <p>Tags:</p>
-                                    <a href="{% url 'app:tag' 'black-jack' %}">black-jack</a>
-                                    <a href="{% url 'app:tag' 'bender' %}">bender</a>
-                                </div>
+                            <p>{{ answer.text }}</p>
+                            <div class="question-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="correct" {% if answer.is_correct %}checked{% endif %}>
+                                    <span>Correct!</span>
+                                </label>
                             </div>
                         </div>
                     </div>
-                {% endfor %}  
-            </div> 
-            <div class="button_list">
-                {% for page in pages %}
-                    <a href="?page={{ page }}">{{ page }}</a>
                 {% endfor %}
+                <hr>
+                <div class="answer_area">
+                    <textarea placeholder="Enter your answer here..."></textarea>
+                    <button>Answer!</button>
+                </div>
             </div>
         </div>
         <div class="content_tags">

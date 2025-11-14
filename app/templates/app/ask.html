@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ask.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <title>AskPupkin - New Questions</title>
+    <title>AskPupkin - Ask Question</title>
 </head>
 <body>
     <header class="header">
@@ -19,52 +19,27 @@
             <input type="search" placeholder="search">
             <a href="{% url 'app:ask' %}" class="ask-button">ASK!</a>
         </div>
-        <div class="profile">
-            <div class="avatar">
-                <img src="#" alt="" class="avatar_img">
-            </div>
-            <div class="profile-info">
-                <p>Dr.Pepper</p>
-                <div class="header_links">
-                    <a href="{% url 'app:settings' %}">settings</a>
-                    <a href="#">log out</a>
-                </div>
-            </div>
+        <div class="header_links">
+            <a href="{% url 'app:login' %}">log in</a>
+            <a href="{% url 'app:signup' %}">register</a>
         </div>
     </header>
     <main>
         <div class="main-container">
-            <h2>
-                New Questions
-                <span><a href="{% url 'app:hot' %}">Hot Questions</a></span>
-            </h2>
-            <div class="questions-list">
-                {% for question in new_questions %}
-                    <div class="question">
-                        <div class="left">
-                            <img src="#" alt="" class="question_img">
-                            <input type="number">
-                        </div>
-                        <div class="center_que">
-                            <a href="{% url 'app:question_detail' question.id %}">{{ question.question_text }}</a>
-                            <p>{{ question.question_detail_text }}</p>
-                            <div class="padding_que">
-                                <a href="{% url 'app:question_detail' question.id %}" class="ans">answer(3)</a>
-                                <div class="tags_que">
-                                    <p>Tags:</p>
-                                    <a href="{% url 'app:tag' 'black-jack' %}">black-jack</a>
-                                    <a href="{% url 'app:tag' 'bender' %}">bender</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}  
-            </div> 
-            <div class="button_list">
-                {% for page in pages %}
-                    <a href="?page={{ page }}">{{ page }}</a>
-                {% endfor %}
+            <h2>New Question</h2>
+            <div class="main_inp">
+                <p class="title">Title</p>
+                <textarea placeholder="Enter your title here..."></textarea>
             </div>
+            <div class="main_inp">
+                <p class="text">Text</p>
+                <textarea class="text-inp" placeholder="Enter your text here..."></textarea>
+            </div>
+            <div class="main_inp">
+                <p class="tags">Tags</p>
+                <textarea placeholder="Enter your tags here..."></textarea>
+            </div>
+            <button>ASK!</button>
         </div>
         <div class="content_tags">
             <div class="tags-container">

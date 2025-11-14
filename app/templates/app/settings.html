@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <title>AskPupkin - New Questions</title>
+    <title>AskPupkin - Settings</title>
 </head>
 <body>
     <header class="header">
@@ -17,7 +17,7 @@
         </div>
         <div class="search">
             <input type="search" placeholder="search">
-            <a href="{% url 'app:ask' %}" class="ask-button">ASK!</a>
+            <button class="search-button">ASK!</button>
         </div>
         <div class="profile">
             <div class="avatar">
@@ -33,37 +33,44 @@
         </div>
     </header>
     <main>
-        <div class="main-container">
-            <h2>
-                New Questions
-                <span><a href="{% url 'app:hot' %}">Hot Questions</a></span>
-            </h2>
-            <div class="questions-list">
-                {% for question in new_questions %}
-                    <div class="question">
-                        <div class="left">
-                            <img src="#" alt="" class="question_img">
-                            <input type="number">
+        <div class="main_container">
+            <div class="login">
+                <div class="login_name">Settings: Dr.Pepper</div>
+                <div class="enters">
+                    <div class="login_enter">
+                        <div class="login_label">Login</div>
+                        <div class="login_input">
+                            <input type="text" placeholder="Enter your login here" size="20">
                         </div>
-                        <div class="center_que">
-                            <a href="{% url 'app:question_detail' question.id %}">{{ question.question_text }}</a>
-                            <p>{{ question.question_detail_text }}</p>
-                            <div class="padding_que">
-                                <a href="{% url 'app:question_detail' question.id %}" class="ans">answer(3)</a>
-                                <div class="tags_que">
-                                    <p>Tags:</p>
-                                    <a href="{% url 'app:tag' 'black-jack' %}">black-jack</a>
-                                    <a href="{% url 'app:tag' 'bender' %}">bender</a>
+                    </div>
+                    <div class="email_enter">
+                        <div class="email_label">Email</div>
+                        <div class="email_input">
+                            <input type="text" placeholder="Enter your email here" size="20">
+                        </div>
+                    </div>
+                    <div class="nick_enter">
+                        <div class="nick_label">NickName</div>
+                        <div class="nick_input">
+                            <input type="text" placeholder="Enter your nickname here" size="20">
+                        </div>
+                    </div>
+                    <div class="choose_img">
+                        <div class="img_label">Upload avatar</div>
+                        <div class="img_div">
+                            <img src="" alt="" class="picture">
+                            <div class="img_input_div">
+                                <div class="img_input">
+                                    <input type="file" placeholder="Take your picture here" size="20" accept="image/png, image/jpeg, image/jpg">
                                 </div>
+                                <button class="img_button">Choose</button>
                             </div>
                         </div>
                     </div>
-                {% endfor %}  
-            </div> 
-            <div class="button_list">
-                {% for page in pages %}
-                    <a href="?page={{ page }}">{{ page }}</a>
-                {% endfor %}
+                    <div class="login_foot">
+                        <button>Save</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content_tags">
