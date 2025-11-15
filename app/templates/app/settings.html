@@ -17,59 +17,87 @@
         </div>
         <div class="search">
             <input type="search" placeholder="search">
-            <button class="search-button">ASK!</button>
+            <a href="{% url 'app:ask' %}" class="ask-button">ASK!</a>
         </div>
         <div class="profile">
             <div class="avatar">
-                <img src="#" alt="" class="avatar_img">
+                {% if user.is_authenticated and user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class="avatar_img">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.png' %}" alt="Default Avatar" class="avatar_img">
+                {% endif %}
             </div>
             <div class="profile-info">
-                <p>Dr.Pepper</p>
-                <div class="header_links">
-                    <a href="{% url 'app:settings' %}">settings</a>
-                    <a href="#">log out</a>
-                </div>
+                {% if user.is_authenticated %}
+                    <p>{{ user.username }}</p>
+                    <div class="header_links">
+                        <a href="{% url 'app:settings' %}">settings</a>
+                        <a href="#">log out</a>
+                    </div>
+                {% else %}
+                    <p>Guest</p>
+                    <div class="header_links">
+                        <a href="{% url 'app:login' %}">log in</a>
+                        <a href="{% url 'app:signup' %}">register</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </header>
     <main>
         <div class="main_container">
             <div class="login">
-                <div class="login_name">Settings: Dr.Pepper</div>
+                <div class="login_name">
+                    Settings: 
+                    {% if user.is_authenticated %}
+                        {{ user.username }}
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </div>
                 <div class="enters">
-                    <div class="login_enter">
-                        <div class="login_label">Login</div>
-                        <div class="login_input">
-                            <input type="text" placeholder="Enter your login here" size="20">
-                        </div>
-                    </div>
-                    <div class="email_enter">
-                        <div class="email_label">Email</div>
-                        <div class="email_input">
-                            <input type="text" placeholder="Enter your email here" size="20">
-                        </div>
-                    </div>
-                    <div class="nick_enter">
-                        <div class="nick_label">NickName</div>
-                        <div class="nick_input">
-                            <input type="text" placeholder="Enter your nickname here" size="20">
-                        </div>
-                    </div>
-                    <div class="choose_img">
-                        <div class="img_label">Upload avatar</div>
-                        <div class="img_div">
-                            <img src="" alt="" class="picture">
-                            <div class="img_input_div">
-                                <div class="img_input">
-                                    <input type="file" placeholder="Take your picture here" size="20" accept="image/png, image/jpeg, image/jpg">
-                                </div>
-                                <button class="img_button">Choose</button>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="login_enter">
+                            <div class="login_label">Login</div>
+                            <div class="login_input">
+                                <input type="text" name="username" placeholder="Enter your login here" size="20" 
+                                       value="{% if user.is_authenticated %}{{ user.username }}{% endif %}">
                             </div>
                         </div>
-                    </div>
-                    <div class="login_foot">
-                        <button>Save</button>
-                    </div>
+                        <div class="email_enter">
+                            <div class="email_label">Email</div>
+                            <div class="email_input">
+                                <input type="email" name="email" placeholder="Enter your email here" size="20"
+                                       value="{% if user.is_authenticated %}{{ user.email }}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="nick_enter">
+                            <div class="nick_label">NickName</div>
+                            <div class="nick_input">
+                                <input type="text" name="nickname" placeholder="Enter your nickname here" size="20"
+                                       value="{% if user.is_authenticated %}{{ user.username }}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="choose_img">
+                            <div class="img_label">Upload avatar</div>
+                            <div class="img_div">
+                                {% if user.is_authenticated and user.avatar %}
+                                    <img src="{{ user.avatar.url }}" alt="" class="picture">
+                                {% else %}
+                                    <img src="{% static 'images/default_avatar.png' %}" alt="" class="picture">
+                                {% endif %}
+                                <div class="img_input_div">
+                                    <div class="img_input">
+                                        <input type="file" name="avatar" placeholder="Take your picture here" size="20" accept="image/png, image/jpeg, image/jpg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login_foot">
+                            <button type="submit">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -77,24 +105,21 @@
             <div class="tags-container">
                 <h3>Popular Tags</h3>
                 <div class="tags">
-                    <a href="{% url 'app:tag' 'perl' %}">perl</a>
-                    <a href="{% url 'app:tag' 'python' %}" class="text-red">python</a>
-                    <a href="{% url 'app:tag' 'technopark' %}">Technopark</a>
-                    <a href="{% url 'app:tag' 'mysql' %}" class="text-red">MySQL</a>
-                    <a href="{% url 'app:tag' 'django' %}" class="text-green">django</a>
-                    <a href="{% url 'app:tag' 'mailru' %}">Mail.ru</a>
-                    <a href="{% url 'app:tag' 'voloshin' %}">Voloshin</a>
-                    <a href="{% url 'app:tag' 'firefox' %}" class="text-orange">Firefox</a>
+                    {% for tag in tags %}
+                        <a href="{% url 'app:tag' tag.title %}">{{ tag.title }}</a>
+                    {% empty %}
+                        <p>No tags available</p>
+                    {% endfor %}
                 </div>
             </div>
             <div class="members-container">
                 <h3>Best Members</h3>
                 <ul>
-                    <li><a href="{% url 'app:tag' 'mr-freeman' %}">Mr.Freeman</a></li>
-                    <li><a href="{% url 'app:tag' 'dr-house' %}">Dr.House</a></li>
-                    <li><a href="{% url 'app:tag' 'bender' %}">Bender</a></li>
-                    <li><a href="{% url 'app:tag' 'queen-victoria' %}">Queen Victoria</a></li>
-                    <li><a href="{% url 'app:tag' 'v-pupkin' %}">V Pupkin</a></li>
+                    {% for member in best_members %}
+                        <li><a href="{% url 'app:member' member.username %}">{{ member.username }}</a></li>
+                    {% empty %}
+                        <li>No members found</li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

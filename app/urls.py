@@ -12,4 +12,5 @@ urlpatterns = [
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('ask/', views.AskView.as_view(), name='ask'),
     path('settings/', views.SettingsView.as_view(), name='settings'),
+    path('member/<str:username>/', views.MemberQuestionsView.as_view(), name='member'),
 ]
