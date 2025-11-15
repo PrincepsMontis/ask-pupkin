@@ -1,9 +1,12 @@
 import math
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
+from django.db.models import Count
 
-def paginate(objects_list, request, per_page=10):
+from app.models import Question, Tag, Answer, User
+
+def paginate(objects_list, request, per_page=20):
     paginator = Paginator(objects_list, per_page)
     page = request.GET.get('page', 1)
     try:
@@ -17,98 +20,62 @@ def paginate(objects_list, request, per_page=10):
 
 class IndexView(TemplateView):
     template_name = 'app/index.html'
-    COUNT_FAKE_QUESTIONS = 30
-    QUESTIONS_PER_PAGE = 4
-    
-    def get_fake_questions(self):
-        return [{
-            'id': i,
-            'question_text': f'Fake question #{i}',
-            'question_detail_text': 'Guys, i have trouble with a moon park. Can\'t find the black-jack...',
-        } for i in range(1, self.COUNT_FAKE_QUESTIONS + 1)]
+    QUESTIONS_PER_PAGE = 20
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        questions = self.get_fake_questions()
-        page_obj = paginate(questions, self.request, self.QUESTIONS_PER_PAGE)
-        page = int(self.request.GET.get('page', 1))
-        context['page'] = page
-        context['count_questions'] = self.COUNT_FAKE_QUESTIONS
-        context['questions_per_page'] = self.QUESTIONS_PER_PAGE
-        context['max_page'] = math.ceil(self.COUNT_FAKE_QUESTIONS / self.QUESTIONS_PER_PAGE)
-        context['pages'] = [i for i in range(1, context['max_page'] + 1)]
         
-        if page == 1:
-            context['new_questions'] = questions[0:(page * self.QUESTIONS_PER_PAGE)]
-        else:
-            start_index = (page - 1) * self.QUESTIONS_PER_PAGE
-            end_index = start_index + self.QUESTIONS_PER_PAGE
-            context['new_questions'] = questions[start_index:end_index]
+        new_questions = Question.objects.new_questions()
+        page_obj = paginate(new_questions, self.request, self.QUESTIONS_PER_PAGE)
         
+        context.update({
+            'new_questions': page_obj,
+            'pages': range(1, page_obj.paginator.num_pages + 1),
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+            'page_obj': page_obj,
+        })
         return context
 
 class HotQuestionsView(TemplateView):
     template_name = 'app/hot_questions.html'
-    COUNT_FAKE_QUESTIONS = 25
-    QUESTIONS_PER_PAGE = 4
-    
-    def get_fake_questions(self):
-        return [{
-            'id': i,
-            'question_text': f'Hot question #{i}',
-            'question_detail_text': 'This is a popular question with many votes...',
-        } for i in range(1, self.COUNT_FAKE_QUESTIONS + 1)]
+    QUESTIONS_PER_PAGE = 20
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        questions = self.get_fake_questions()
         
-        page = int(self.request.GET.get('page', 1))
-        context['page'] = page
-        context['count_questions'] = self.COUNT_FAKE_QUESTIONS
-        context['questions_per_page'] = self.QUESTIONS_PER_PAGE
-        context['max_page'] = math.ceil(self.COUNT_FAKE_QUESTIONS / self.QUESTIONS_PER_PAGE)
-        context['pages'] = [i for i in range(1, context['max_page'] + 1)]
+        hot_questions = Question.objects.hot_questions()
+        page_obj = paginate(hot_questions, self.request, self.QUESTIONS_PER_PAGE)
         
-        if page == 1:
-            context['questions'] = questions[0:(page * self.QUESTIONS_PER_PAGE)]
-        else:
-            start_index = (page - 1) * self.QUESTIONS_PER_PAGE
-            end_index = start_index + self.QUESTIONS_PER_PAGE
-            context['questions'] = questions[start_index:end_index]
-        
+        context.update({
+            'questions': page_obj,
+            'pages': range(1, page_obj.paginator.num_pages + 1),
+            'page_obj': page_obj,
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
         return context
 
 class TagQuestionsView(TemplateView):
     template_name = 'app/tag_questions.html'
-    QUESTIONS_PER_PAGE = 4
-    
-    def get_fake_questions(self, tag):
-        return [{
-            'id': i,
-            'question_text': f'Question about {tag} #{i}',
-            'question_detail_text': f'This question is related to {tag} tag...',
-        } for i in range(1, 16)]
+    QUESTIONS_PER_PAGE = 20
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tag = self.kwargs.get('tag', '')
-        questions = self.get_fake_questions(tag)
+        tag_name = self.kwargs.get('tag')
         
-        page = int(self.request.GET.get('page', 1))
-        context['tag'] = tag
-        context['count_questions'] = len(questions)
-        context['questions_per_page'] = self.QUESTIONS_PER_PAGE
-        context['max_page'] = math.ceil(len(questions) / self.QUESTIONS_PER_PAGE)
-        context['pages'] = [i for i in range(1, context['max_page'] + 1)]
+        tag = get_object_or_404(Tag, title=tag_name)
+        questions = Question.objects.by_tag(tag_name)
+        page_obj = paginate(questions, self.request, self.QUESTIONS_PER_PAGE)
         
-        if page == 1:
-            context['questions'] = questions[0:(page * self.QUESTIONS_PER_PAGE)]
-        else:
-            start_index = (page - 1) * self.QUESTIONS_PER_PAGE
-            end_index = start_index + self.QUESTIONS_PER_PAGE
-            context['questions'] = questions[start_index:end_index]
-        
+        context.update({
+            'tag': tag_name,
+            'questions': page_obj,
+            'pages': range(1, page_obj.paginator.num_pages + 1),
+            'page_obj': page_obj,
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
         return context
 
 class QuestionDetailView(TemplateView):
@@ -118,32 +85,81 @@ class QuestionDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         question_id = self.kwargs.get('question_id')
         
-        question = {
-            'id': question_id,
-            'title': 'How to build a moon park?',
-            'text': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit magni cum quos deserunt neque, ea dolorum natus facilis magnam inventore sequi beatae, nam velit exercitationem quisquam illo laboriosam veniam doloremque! Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        }
-        
-        answers = [{
-            'id': i,
-            'text': f'This is answer #{i} to the question.',
-            'is_correct': i == 1,
-        } for i in range(1, 4)]
+        question = get_object_or_404(Question, id=question_id)
+        answers = question.answers.all()
         
         context.update({
             'question': question,
             'answers': answers,
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
         })
         return context
 
 class LoginView(TemplateView):
     template_name = 'app/login.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
+        return context
 
 class SignupView(TemplateView):
     template_name = 'app/signup.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
+        return context
 
 class AskView(TemplateView):
     template_name = 'app/ask.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
+        return context
 
 class SettingsView(TemplateView):
     template_name = 'app/settings.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
+        return context
+class MemberQuestionsView(TemplateView):
+    template_name = 'app/member_questions.html'
+    QUESTIONS_PER_PAGE = 20
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username')
+        
+
+        member = get_object_or_404(User, username=username)
+        
+
+        member_questions = Question.objects.filter(author=member, is_active=True)
+        page_obj = paginate(member_questions, self.request, self.QUESTIONS_PER_PAGE)
+        
+        context.update({
+            'member': member,
+            'questions': page_obj,
+            'pages': range(1, page_obj.paginator.num_pages + 1),
+            'page_obj': page_obj,
+            'tags': Tag.objects.popular_tags(),
+            'best_members': User.objects.best_members(),
+        })
+        return context

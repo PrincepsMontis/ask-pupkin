@@ -21,14 +21,26 @@
         </div>
         <div class="profile">
             <div class="avatar">
-                <img src="#" alt="" class="avatar_img">
+                {% if user.is_authenticated and user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class="avatar_img">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.png' %}" alt="Default Avatar" class="avatar_img">
+                {% endif %}
             </div>
             <div class="profile-info">
-                <p>Dr.Pepper</p>
-                <div class="header_links">
-                    <a href="{% url 'app:settings' %}">settings</a>
-                    <a href="#">log out</a>
-                </div>
+                {% if user.is_authenticated %}
+                    <p>{{ user.username }}</p>
+                    <div class="header_links">
+                        <a href="{% url 'app:settings' %}">settings</a>
+                        <a href="#">log out</a>
+                    </div>
+                {% else %}
+                    <p>Guest</p>
+                    <div class="header_links">
+                        <a href="{% url 'app:login' %}">log in</a>
+                        <a href="{% url 'app:signup' %}">register</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -42,52 +54,72 @@
                 {% for question in new_questions %}
                     <div class="question">
                         <div class="left">
-                            <img src="#" alt="" class="question_img">
-                            <input type="number">
+                            {% if question.author.avatar %}
+                                <img src="{{ question.author.avatar.url }}" alt="{{ question.author.username }}" class="question_img">
+                            {% else %}
+                                <img src="{% static 'images/default_avatar.png' %}" alt="Default Avatar" class="question_img">
+                            {% endif %}
+                            <input type="number" value="{{ question.rating }}" readonly>
                         </div>
                         <div class="center_que">
-                            <a href="{% url 'app:question_detail' question.id %}">{{ question.question_text }}</a>
-                            <p>{{ question.question_detail_text }}</p>
+                            <a href="{% url 'app:question_detail' question.id %}">{{ question.title }}</a>
+                            <p>{{ question.detailed|truncatewords:30 }}</p>
                             <div class="padding_que">
-                                <a href="{% url 'app:question_detail' question.id %}" class="ans">answer(3)</a>
+                                <a href="{% url 'app:question_detail' question.id %}" class="ans">answer({{ question.answers_count }})</a>
                                 <div class="tags_que">
                                     <p>Tags:</p>
-                                    <a href="{% url 'app:tag' 'black-jack' %}">black-jack</a>
-                                    <a href="{% url 'app:tag' 'bender' %}">bender</a>
+                                    {% for tag in question.tags.all %}
+                                        <a href="{% url 'app:tag' tag.title %}">{{ tag.title }}</a>
+                                    {% empty %}
+                                        <span>No tags</span>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
+                {% empty %}
+                    <div class="no-questions">
+                        <p>No questions found.</p>
+                    </div>
                 {% endfor %}  
             </div> 
             <div class="button_list">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">«</a>
+                {% endif %}
+                
                 {% for page in pages %}
-                    <a href="?page={{ page }}">{{ page }}</a>
+                    {% if page == page_obj.number %}
+                        <span class="current-page">{{ page }}</span>
+                    {% else %}
+                        <a href="?page={{ page }}">{{ page }}</a>
+                    {% endif %}
                 {% endfor %}
+                
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">»</a>
+                {% endif %}
             </div>
         </div>
         <div class="content_tags">
             <div class="tags-container">
                 <h3>Popular Tags</h3>
                 <div class="tags">
-                    <a href="{% url 'app:tag' 'perl' %}">perl</a>
-                    <a href="{% url 'app:tag' 'python' %}" class="text-red">python</a>
-                    <a href="{% url 'app:tag' 'technopark' %}">Technopark</a>
-                    <a href="{% url 'app:tag' 'mysql' %}" class="text-red">MySQL</a>
-                    <a href="{% url 'app:tag' 'django' %}" class="text-green">django</a>
-                    <a href="{% url 'app:tag' 'mailru' %}">Mail.ru</a>
-                    <a href="{% url 'app:tag' 'voloshin' %}">Voloshin</a>
-                    <a href="{% url 'app:tag' 'firefox' %}" class="text-orange">Firefox</a>
+                    {% for tag in tags %}
+                        <a href="{% url 'app:tag' tag.title %}">{{ tag.title }}</a>
+                    {% empty %}
+                        <p>No tags available</p>
+                    {% endfor %}
                 </div>
             </div>
             <div class="members-container">
                 <h3>Best Members</h3>
                 <ul>
-                    <li><a href="{% url 'app:tag' 'mr-freeman' %}">Mr.Freeman</a></li>
-                    <li><a href="{% url 'app:tag' 'dr-house' %}">Dr.House</a></li>
-                    <li><a href="{% url 'app:tag' 'bender' %}">Bender</a></li>
-                    <li><a href="{% url 'app:tag' 'queen-victoria' %}">Queen Victoria</a></li>
-                    <li><a href="{% url 'app:tag' 'v-pupkin' %}">V Pupkin</a></li>
+                    {% for member in best_members %}
+                    <li><a href="{% url 'app:member' member.username %}">{{ member.username }}</a></li>
+                    {% empty %}
+                     <li>No members found</li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
